@@ -1,0 +1,44 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "启动交互式光学仿真 UI",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "optical_sim.ui",
+            "python": "D:\\anaconda\\envs\\NIST2\\python.exe",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}\\src"
+            },
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "运行 355 nm 条形光斑设计",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "optical_sim",
+            "python": "D:\\anaconda\\envs\\NIST2\\python.exe",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}\\src"
+            },
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "使用 NIST2 调试当前文件",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "python": "D:\\anaconda\\envs\\NIST2\\python.exe",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}\\src"
+            },
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}

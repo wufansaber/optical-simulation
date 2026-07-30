@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "optical-simulation"
+version = "0.7.0"
+description = "Interactive astigmatic Gaussian beam propagation with arbitrary direction and XY lenses."
+readme = "README.md"
+requires-python = ">=3.8,<3.9"
+dependencies = [
+    "numpy>=1.24,<1.25",
+    "matplotlib>=3.7,<3.8",
+]
+
+[project.scripts]
+stripe-355nm = "optical_sim.__main__:main"
+optical-sim-ui = "optical_sim.ui:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

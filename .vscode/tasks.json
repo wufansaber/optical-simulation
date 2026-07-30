@@ -1,0 +1,74 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "NIST2: 验证环境",
+            "type": "process",
+            "command": "D:\\anaconda\\envs\\NIST2\\python.exe",
+            "args": [
+                "-c",
+                "import sys, numpy, matplotlib; print(sys.version); print('NumPy', numpy.__version__); print('Matplotlib', matplotlib.__version__)"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "NIST2: 运行条形光斑设计",
+            "type": "process",
+            "command": "D:\\anaconda\\envs\\NIST2\\python.exe",
+            "args": ["-m", "optical_sim"],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {"PYTHONPATH": "${workspaceFolder}\\src"}
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "NIST2: 启动交互式光学仿真 UI",
+            "type": "process",
+            "command": "D:\\anaconda\\envs\\NIST2\\python.exe",
+            "args": ["-m", "optical_sim.ui"],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {"PYTHONPATH": "${workspaceFolder}\\src"}
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "NIST2: 打包快速启动目录版 EXE",
+            "type": "process",
+            "command": "D:\\anaconda\\envs\\NIST2\\python.exe",
+            "args": [
+                "-m", "PyInstaller",
+                "--noconfirm", "--clean", "--onedir", "--windowed",
+                "--name", "OpticalSimulation",
+                "--paths", "src",
+                "--hidden-import", "matplotlib.backends.backend_tkagg",
+                "--exclude-module", "PyQt5",
+                "--exclude-module", "PyQt6",
+                "--exclude-module", "PySide2",
+                "--exclude-module", "PySide6",
+                "examples\\run_interactive_ui.py"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "PYTHONPATH": "${workspaceFolder}\\src",
+                    "MPLBACKEND": "TkAgg"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "NIST2: 运行单元测试",
+            "type": "process",
+            "command": "D:\\anaconda\\envs\\NIST2\\python.exe",
+            "args": ["-m", "unittest", "discover", "-s", "tests", "-v"],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {"PYTHONPATH": "${workspaceFolder}\\src"}
+            },
+            "group": {"kind": "test", "isDefault": true},
+            "problemMatcher": []
+        }
+    ]
+}

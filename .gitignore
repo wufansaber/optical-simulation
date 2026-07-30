@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Conda / virtual environments
+.conda/
+.venv/
+
+# IDE / operating system
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated simulation results
+outputs/*
+!outputs/.gitkeep
+
