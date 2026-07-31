@@ -4,16 +4,6 @@
 
 完整的软件功能与操作说明请参阅：[SOFTWARE_GUIDE_CN.md](SOFTWARE_GUIDE_CN.md)。
 
-## 交互式 UI
-
-启动桌面界面：
-
-```powershell
-$env:PYTHONPATH = "C:\Users\吴凡\Documents\optical-simulation\src"
-& "D:\anaconda\envs\NIST2\python.exe" -m optical_sim.ui
-```
-
-也可以在 VS Code 的“运行和调试”中选择 `启动交互式光学仿真 UI`，或执行任务 `NIST2: 启动交互式光学仿真 UI`。
 
 ## 快速启动目录版 EXE
 
@@ -25,13 +15,6 @@ dist\OpticalSimulation\OpticalSimulation.exe
 
 运行或复制程序时必须保留整个 `dist\OpticalSimulation` 文件夹，不能只复制其中的 EXE；其 `_internal` 子目录包含 Python、NumPy、Matplotlib 和 Tcl/Tk 依赖。目录版无需在每次启动时解压全部组件，因此比单文件版启动更快。
 
-在 VS Code 中可执行任务 `NIST2: 打包快速启动目录版 EXE` 重新构建。等效命令为：
-
-```powershell
-$env:PYTHONPATH = "C:\Users\吴凡\Documents\optical-simulation\src"
-$env:MPLBACKEND = "TkAgg"
-& "D:\anaconda\envs\NIST2\python.exe" -m PyInstaller --noconfirm --clean --onedir --windowed --name OpticalSimulation --paths src --hidden-import matplotlib.backends.backend_tkagg --exclude-module PyQt5 --exclude-module PyQt6 --exclude-module PySide2 --exclude-module PySide6 examples\run_interactive_ui.py
-```
 
 界面支持：
 
