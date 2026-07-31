@@ -32,24 +32,17 @@ dist\OpticalSimulation\OpticalSimulation.exe
 
 ### 2.2 在 VS Code 中运行源码
 
-Python 解释器：
-
-```text
-D:\anaconda\envs\NIST2\python.exe
-```
+建议使用 Python 3.10 Conda 环境。在 VS Code 中运行 `Python: Select Interpreter`，选择已创建环境的 Python 解释器。
 
 PowerShell 启动命令：
 
 ```powershell
-$env:PYTHONPATH = "C:\Users\吴凡\Documents\optical-simulation\src"
-& "D:\anaconda\envs\NIST2\python.exe" -m optical_sim.ui
+conda activate <environment-name>
+$env:PYTHONPATH = "$PWD\src"
+python -m optical_sim.ui
 ```
 
-也可以在 VS Code 中执行任务：
-
-```text
-NIST2: 启动交互式光学仿真 UI
-```
+也可以在 VS Code 中使用项目提供的 UI 启动配置。
 
 ## 3. 推荐操作流程
 

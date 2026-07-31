@@ -1,6 +1,6 @@
 # Interactive Gaussian Beam XY Simulation
 
-本项目在 VS Code 中使用现有 Conda 环境 `NIST2`，以 Python 和 X/Y 分离的复数 q 参数、ABCD 矩阵计算 355 nm 相干高斯光束。当前版本按工件表面垂直入射计算，不使用折转反射镜。
+本项目建议在 VS Code 中使用 Python 3.10 Conda 环境，以 Python 和 X/Y 分离的复数 q 参数、ABCD 矩阵计算 355 nm 相干高斯光束。当前版本按工件表面垂直入射计算，不使用折转反射镜。
 
 完整的软件功能与操作说明请参阅：[SOFTWARE_GUIDE_CN.md](SOFTWARE_GUIDE_CN.md)。
 
@@ -9,11 +9,12 @@
 启动桌面界面：
 
 ```powershell
-$env:PYTHONPATH = "C:\Users\吴凡\Documents\optical-simulation\src"
-& "D:\anaconda\envs\NIST2\python.exe" -m optical_sim.ui
+conda activate <environment-name>
+$env:PYTHONPATH = "$PWD\src"
+python -m optical_sim.ui
 ```
 
-也可以在 VS Code 的“运行和调试”中选择 `启动交互式光学仿真 UI`，或执行任务 `NIST2: 启动交互式光学仿真 UI`。
+也可以在 VS Code 的“运行和调试”中选择项目提供的交互式光学仿真 UI 启动配置。
 
 ## 快速启动目录版 EXE
 
@@ -25,12 +26,13 @@ dist\OpticalSimulation\OpticalSimulation.exe
 
 运行或复制程序时必须保留整个 `dist\OpticalSimulation` 文件夹，不能只复制其中的 EXE；其 `_internal` 子目录包含 Python、NumPy、Matplotlib 和 Tcl/Tk 依赖。目录版无需在每次启动时解压全部组件，因此比单文件版启动更快。
 
-在 VS Code 中可执行任务 `NIST2: 打包快速启动目录版 EXE` 重新构建。等效命令为：
+在 VS Code 中可执行项目提供的目录版 EXE 打包任务。等效命令为：
 
 ```powershell
-$env:PYTHONPATH = "C:\Users\吴凡\Documents\optical-simulation\src"
+conda activate <environment-name>
+$env:PYTHONPATH = "$PWD\src"
 $env:MPLBACKEND = "TkAgg"
-& "D:\anaconda\envs\NIST2\python.exe" -m PyInstaller --noconfirm --clean --onedir --windowed --name OpticalSimulation --paths src --hidden-import matplotlib.backends.backend_tkagg --exclude-module PyQt5 --exclude-module PyQt6 --exclude-module PySide2 --exclude-module PySide6 examples\run_interactive_ui.py
+python -m PyInstaller --noconfirm --clean --onedir --windowed --name OpticalSimulation --paths src --hidden-import matplotlib.backends.backend_tkagg --exclude-module PyQt5 --exclude-module PyQt6 --exclude-module PySide2 --exclude-module PySide6 examples\run_interactive_ui.py
 ```
 
 界面支持：
@@ -90,25 +92,22 @@ X/Y 发散角输入单位为 mrad，定义为激光器输出面 `1/e^2` 半径�
 
 斜率参数低于项目设置的 0.3 有效性阈值，但已经接近阈值。工程定型仍应加入真实透镜厚度、材料、像差、M2、装调误差、损伤阈值，并用矢量衍射或物理光学软件复核 0.8 um 聚焦结果。
 
-## VS Code 与 NIST2
+## VS Code 与 Conda
 
-打开英文项目：
-
-```powershell
-code "C:\Users\吴凡\Documents\optical-simulation"
-```
-
-VS Code 中选择 Python 解释器：
-
-```text
-D:\anaconda\envs\NIST2\python.exe
-```
-
-运行：
+在项目根目录打开 VS Code：
 
 ```powershell
-& "D:\anaconda\envs\NIST2\python.exe" -m pip install -e .
-& "D:\anaconda\envs\NIST2\python.exe" -m optical_sim
+code .
+```
+
+先激活所需的 Conda 环境，再在 VS Code 中运行 `Python: Select Interpreter`，选择该环境的 Python 解释器。
+
+安装并运行：
+
+```powershell
+conda activate <environment-name>
+python -m pip install -e .
+python -m optical_sim
 ```
 
 ## 输出文件
@@ -127,6 +126,7 @@ D:\anaconda\envs\NIST2\python.exe
 运行测试：
 
 ```powershell
-$env:PYTHONPATH = "C:\Users\吴凡\Documents\optical-simulation\src"
-& "D:\anaconda\envs\NIST2\python.exe" -m unittest discover -s tests -v
+conda activate <environment-name>
+$env:PYTHONPATH = "$PWD\src"
+python -m unittest discover -s tests -v
 ```
