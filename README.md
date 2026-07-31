@@ -90,26 +90,6 @@ X/Y 发散角输入单位为 mrad，定义为激光器输出面 `1/e^2` 半径�
 
 斜率参数低于项目设置的 0.3 有效性阈值，但已经接近阈值。工程定型仍应加入真实透镜厚度、材料、像差、M2、装调误差、损伤阈值，并用矢量衍射或物理光学软件复核 0.8 um 聚焦结果。
 
-## VS Code 与 NIST2
-
-打开英文项目：
-
-```powershell
-code "C:\Users\吴凡\Documents\optical-simulation"
-```
-
-VS Code 中选择 Python 解释器：
-
-```text
-D:\anaconda\envs\NIST2\python.exe
-```
-
-运行：
-
-```powershell
-& "D:\anaconda\envs\NIST2\python.exe" -m pip install -e .
-& "D:\anaconda\envs\NIST2\python.exe" -m optical_sim
-```
 
 ## 输出文件
 
