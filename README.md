@@ -94,3 +94,30 @@ conda activate <environment-name>
 $env:PYTHONPATH = "$PWD\src"
 python -m unittest discover -s tests -v
 ```
+
+## 180 mm 双支路四工况初算
+
+项目包含一个等效的一阶模型，用于在真实镜组处方尚未齐全时启动计算。当前工况为：
+
+- 近法向入射 `1 deg`，倍率 A：`1.44 um x 5.2 mm`；
+- 近法向入射 `1 deg`，倍率 B：`1.05 um x 2.667 mm`；
+- 斜入射 `75 deg`，倍率 A：`1.44 um x 5.2 mm`；
+- 斜入射 `75 deg`，倍率 B：`1.05 um x 2.667 mm`。
+
+四个工况均使用从激光器输出参考面到晶圆面的 `180 mm` 展开中心光程。近法向中路采用 `s=110 mm` 的 E1 光束整形等效面、`s=166 mm` 的 Normal LFC/Y 向补偿等效面和 `s=174 mm`、等效焦距 `30 mm` 的理想物镜面；斜入射支路采用 `s=110 mm` 的 E1 面和 `s=174 mm` 的 Oblique LFC/E2 面。四工况由“共用前端 + FIBE 倍率 A/B + Prism Diverter 支路选择 + 支路专用后端”组成。运行命令：
+
+```powershell
+conda activate NIST2
+$env:PYTHONPATH = "$PWD\src"
+python examples\run_dual_branch_180mm.py
+```
+
+完整方案在公共 Waist Relay 后增加一维 Y 向匀化器，以 36 阶超高斯近似平顶输出；四工况要求中央 90% 有效线长内 `I_min/I_max >= 90%`。有用光学效率按激光器输出参考面到晶圆目标矩形内的功率定义，要求 `>=65%`，并按逐元件镀膜/衍射效率进行标称值和分配下限预算。
+
+输出目录为 `outputs/dual_branch_180mm`。其中 `case_path_matrix.csv` 标明每个工况的共用部分、倍率切换和支路切换，`estimated_layout.csv` 保存预估元件位置，`summary.csv` 保存四工况焦距和有效性指标，`performance_summary.csv` 保存均匀度和效率判定，`efficiency_budget.csv` 保存逐元件效率预算，`results.json` 保存完整假设与结果；PNG 文件给出拓扑、光束包络、晶圆面光强和性能合规图。
+
+完整三维工程预布局见 `docs/照明光路三维布局完整方案.md`。运行 `examples/generate_complete_3d_layout.py` 会导出逐元件三维坐标、镜面法向、路径段、四工况等效焦度矩阵以及三维/俯视/侧视图。坐标以晶圆交点为原点，严格满足两条 180 mm 几何光程和 1°/75°末段入射角；未提供真实机械与镜片处方的项目均标记为工程预估。
+
+`examples/render_computed_ray_trace.py` 对与高斯 q 参数一致的 1/e² 相空间光线束执行逐段 ABCD 追迹，输出 `computed_ray_trace.png/.svg/.pdf` 以及可复算的 `computed_ray_trace_data.npz`。近法向中路追迹 E1、Normal LFC/补偿面和 `30 mm` 理想物镜，斜入射支路追迹 E1、Oblique LFC/E2；在真实曲率、厚度和三维坐标补齐前，不应解释为真实表面非序列追迹。
+
+该模型是等效初算，不是真实镜片处方。75 度工况的 X 向近轴斜率超过项目阈值，必须用真实光学处方和物理光学方法复核。

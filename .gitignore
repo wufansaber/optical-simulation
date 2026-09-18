@@ -19,3 +19,5 @@ Thumbs.db
 outputs/*
 !outputs/.gitkeep
 
+/build
+/dist
